@@ -6,7 +6,8 @@ local ContextMenu = {}
 
 
 local function predicateScythe(item)
-	return not item:isBroken() and item:hasTag("Scythe")
+	if not item then return false end
+	return not item:isBroken() and item:hasTag(ItemTag.SCYTHE)
 end
 
 function ContextMenu.onMowGrass(player, scythe)

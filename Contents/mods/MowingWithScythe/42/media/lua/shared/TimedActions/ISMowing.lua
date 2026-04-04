@@ -54,7 +54,7 @@ end
 function ISMowing:getGrass(sq)
 	for i=sq:getObjects():size(),1,-1 do
 		local object = sq:getObjects():get(i-1)
-		if object:getProperties() and object:getProperties():Is(IsoFlagType.canBeRemoved) then
+		if object:getProperties() and object:getProperties():has(IsoFlagType.canBeRemoved) then
 			sq:transmitRemoveItemFromSquare(object)
 			local items = self.character:getInventory():AddItems("Base.GrassTuft", ZombRand(2,4));
 			sendAddItemsToContainer(self.character:getInventory(), items);
@@ -73,7 +73,7 @@ function ISMowing:getDuration()
             if sq then
                 for i=sq:getObjects():size(),1,-1 do
 					local object = sq:getObjects():get(i-1)
-					if object:getProperties() and object:getProperties():Is(IsoFlagType.canBeRemoved) then
+					if object:getProperties() and object:getProperties():has(IsoFlagType.canBeRemoved) then
 						duration = duration + 20;
 					end
 				end
@@ -95,7 +95,7 @@ function ISMowing:new (character, item, sq, radius)
     o.item = item;
     if item and not radius then
         radius = 3
-        if item:getType() == "HandScythe" or item:hasTag("HandScythe") then
+        if item:getType() == "HandScythe" or item:hasTag(ItemTag.HAND_SCYTHE) then
            radius = 1
         end
     end
