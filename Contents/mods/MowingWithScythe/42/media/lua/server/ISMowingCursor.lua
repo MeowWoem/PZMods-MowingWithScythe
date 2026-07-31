@@ -10,6 +10,7 @@ function ISMowingCursor:create(x, y, z, north, sprite)
 	local playerObj = self.character
 	local sq = getSquare(x, y, z);
 	ISInventoryPaneContextMenu.equipWeapon(self.scythe, true, true, playerObj:getPlayerNum())
+	self:walkTo(x, y, z);
 	ISTimedActionQueue.add(ISMowing:new(playerObj, self.scythe, sq, self.radius));
 end
 
