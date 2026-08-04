@@ -2,9 +2,13 @@
 --**                       AMENOPHIS                       **
 --***********************************************************
 
-require "BuildingObjects/ISBuildingObject"
+require "BuildingObjects/ISBuildingObject";
 
 ISMowingCursor = ISBuildingObject:derive("ISMowingCursor");
+
+local ghc = getCore():getGoodHighlitedColor();
+local bhc = getCore():getBadHighlitedColor();
+
 
 function ISMowingCursor:create(x, y, z, north, sprite)
 	local playerObj = self.character
@@ -30,23 +34,33 @@ function ISMowingCursor:walkTo(x, y, z)
 	return true
 end
 
+
 function ISMowingCursor:isValid(square)
 	local x,y,z = self:getTopLeftOfSquares(square:getX(), square:getY(), square:getZ())
 	return self:isValidArea(x, y, z)
 end
 
-function ISMowingCursor:isValidArea(x, y, z)
-	local squares = self:getSquares(x, y, z)
+function ISMowingCursor:isValidArea(x, y, z, renderMode)
+	renderMode = renderMode or false;
+	local squares = self:getSquares(x, y, z);
 	local hasGrass = false;
-	for _,square2 in ipairs(squares) do
-		if not square2:isCouldSee(self.character:getPlayerNum()) then
-			return false;
+	local isCouldSee = false;
+	for _,sq in ipairs(squares) do
+		if sq:isCouldSee(self.character:getPlayerNum()) then
+			isCouldSee = true;
 		end
-		if square2:checkHaveGrass() then
-			hasGrass = true;
+		for i=sq:getObjects():size(),1,-1 do
+			local o = sq:getObjects():get(i-1)
+			if ISMowing.isCuttable(o) then
+				hasGrass = true;
+				if(renderMode) then
+					o:setHighlighted(true);
+					o:setHighlightColor(ghc:getR(), ghc:getG(), ghc:getB(), 1.0);
+				end
+			end
 		end
 	end
-	return hasGrass
+	return hasGrass and isCouldSee;
 end
 
 function ISMowingCursor:isRunningAction()
@@ -77,11 +91,11 @@ end
 function ISMowingCursor:render(x, y, z, square)
 	if self:isRunningAction() then return end
 	x,y,z = self:getTopLeftOfSquares(x, y, z)
-	local bValid = self:isValidArea(x, y, z)
+	local bValid = self:isValidArea(x, y, z, true)
 	if bValid then
-		renderIsoRect(x + 1, y + 1, z, self.radius, getCore():getGoodHighlitedColor():getR(),getCore():getGoodHighlitedColor():getG(),getCore():getGoodHighlitedColor():getB(), 0.5, 1)
+		renderIsoRect(x + 1, y + 1, z, self.radius, ghc:getR(), ghc:getG(), ghc:getB(), 0.5, 1)
 	else
-		renderIsoRect(x + 1, y + 1, z, self.radius, getCore():getBadHighlitedColor():getR(),getCore():getBadHighlitedColor():getG(),getCore():getBadHighlitedColor():getB(), 0.5, 1)
+		renderIsoRect(x + 1, y + 1, z, self.radius, bhc:getR(), bhc:getG(), bhc:getB(), 0.5, 1)
 	end
 	
 	if self.character:getJoypadBind() ~= -1 then return end
@@ -96,6 +110,10 @@ end
 
 function ISMowingCursor:getAPrompt()
 	return getText("ContextMenu_MowGrass")
+end
+
+function ISScytheGrassCursor:getYPrompt()
+    return getText("ContextMenu_ChangeRadius")
 end
 
 function ISMowingCursor:getLBPrompt()

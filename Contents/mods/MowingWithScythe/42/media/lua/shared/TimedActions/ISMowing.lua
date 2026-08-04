@@ -6,6 +6,40 @@ require "TimedActions/ISBaseTimedAction"
 
 ISMowing = ISBaseTimedAction:derive("ISMowing");
 
+local function listToSet(list)
+    local set = {};
+    for _, item in ipairs(list) do
+        set[item] = true;
+    end
+    return set;
+end
+
+ISMowing.driedSpriteList = listToSet({
+    "vegetation_farm_01_0",
+    "vegetation_farm_01_1",
+    "vegetation_farm_01_2",
+    "vegetation_farm_01_3",
+    "vegetation_farm_01_4",
+    "vegetation_farm_01_5",
+    "vegetation_farm_01_32",
+    "vegetation_farm_01_33",
+    "vegetation_farm_01_34",
+    "vegetation_farm_01_35",
+    "vegetation_farm_01_36",
+    "vegetation_farm_01_37",
+    "vegetation_farm_01_38",
+    "vegetation_farm_01_39",
+    "vegetation_farm_01_40",
+    "vegetation_farm_01_41",
+    "vegetation_farm_01_42",
+    "vegetation_farm_01_43",
+    "vegetation_farm_01_44",
+    "vegetation_farm_01_45",
+    "vegetation_farm_01_46",
+    "vegetation_farm_01_47",
+    "vegetation_farm_01_48",
+});
+
 function ISMowing:isValid()
     return true;
 end
@@ -47,8 +81,7 @@ function ISMowing:complete()
         for y=self.sq:getY(), self.sq:getY()+self.radius-1 do
             local sq = getSquare(x, y, self.sq:getZ());
             if sq then
-                self:getGrass(sq);
-                i = i + 1
+                i = i + self:getGrass(sq);
             end
         end
     end
@@ -84,15 +117,39 @@ function ISMowing:complete()
     return true
 end
 
+function ISMowing.isCuttable(object)
+
+    local props = object:getProperties();
+    local customName = "";
+    if(props and props:get("CustomName")) then
+        customName = props:get("CustomName");
+    end
+
+    return (object:isGrassLike() or ISMowing.driedSpriteList[object:getSprite():getName()]) and (
+        props and (
+            not customName:find("Branch") and
+            not customName:find("Leaves") and
+            not customName:find("Log") and
+            not customName:find("Stone") and
+            not customName:find("Stump") and
+            not customName:find("Tree") and
+            not customName:find("Twigs")
+        )
+    );
+end
+
 function ISMowing:getGrass(sq)
+    local j = 0;
 	for i=sq:getObjects():size(),1,-1 do
-		local object = sq:getObjects():get(i-1)
-		if object:getProperties() and object:getProperties():has(IsoFlagType.canBeRemoved) then
-			sq:transmitRemoveItemFromSquare(object)
+		local o = sq:getObjects():get(i-1)
+		if self.isCuttable(o) then
+			sq:transmitRemoveItemFromSquare(o)
 			local items = self.character:getInventory():AddItems("Base.GrassTuft", ZombRand(2,4));
 			sendAddItemsToContainer(self.character:getInventory(), items);
+            j = j + 1;
 		end
 	end
+    return j;
 end
 
 function ISMowing:getDuration()
@@ -106,8 +163,8 @@ function ISMowing:getDuration()
             local sq = getSquare(x, y, self.sq:getZ());
             if sq then
                 for i=sq:getObjects():size(),1,-1 do
-					local object = sq:getObjects():get(i-1)
-					if object:getProperties() and object:getProperties():has(IsoFlagType.canBeRemoved) then
+					local o = sq:getObjects():get(i-1)
+					if self.isCuttable(o) then
 						duration = duration + 20 - skill;
 					end
 				end
