@@ -1,6 +1,6 @@
 version=1
 id=3475536311
-title=[B42] Mowing with scythe
+title=[B42MP] Lawn Care: Scythe & Rake (formerly Mow With Scythe)
 description=[h1]? Don't forget to rate my mod if you enjoy it. Thank you! ?[/h1]
 description=
 description=[h2]Description[/h2]

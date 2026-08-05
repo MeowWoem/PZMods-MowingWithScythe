@@ -1,0 +1,16 @@
+module Base
+{
+	
+	item DeadLeaves
+    {	
+        DisplayName = Dead Leaves,
+        DisplayCategory = Junk,
+        ItemType = base:normal,
+        Weight = 0.01,
+        Tags = base:isfirefuel;base:isfiretinder;base:iscompostable,
+        FireFuelRatio = 1.8,
+        Icon = DeadLeaves,
+        WorldStaticModel = DeadLeaves,
+    }
+	
+}

@@ -1,0 +1,9 @@
+module Base
+{
+	model DeadLeaves
+	{
+		mesh = WorldItems/DeadLeaves,
+		texture = WorldItems/DeadLeaves,
+		scale = 0.4,
+	}
+}

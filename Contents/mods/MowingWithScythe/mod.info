@@ -1,7 +1,7 @@
-name=Mowing With Scythe
+name=Lawn Care: Scythe & Rake
 poster=poster.png
 id=mowingwithscythe
 description=
 icon=icon.png
 author=Amenophis
-modversion=1.0.6
+modversion=1.0.8
