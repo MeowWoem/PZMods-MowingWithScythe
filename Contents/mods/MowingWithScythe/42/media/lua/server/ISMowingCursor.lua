@@ -20,24 +20,20 @@ end
 
 function ISMowingCursor:walkTo(x, y, z)
 	local playerObj = self.character
-	x,y,z = self:getTopLeftOfSquares(x, y, z)
 	local squares = self:getSquares(x, y, z)
-	if self.character:getJoypadBind() == -1 then
-		local closestSq = self:getClosestSquare(squares)
-		if playerObj:getCurrentSquare() == closestSq then
-			return true
-		end
-		local adjacent = AdjacentFreeTileFinder.Find(closestSq, self.character)
-		if not adjacent then return false end
-		ISTimedActionQueue.add(ISWalkToTimedAction:new(playerObj, adjacent))
-	end
+    local closestSq = self:getClosestSquare(squares)
+    if playerObj:getCurrentSquare() == closestSq then
+        return true
+    end
+    local adjacent = AdjacentFreeTileFinder.Find(closestSq, self.character)
+    if not adjacent then return false end
+    ISTimedActionQueue.add(ISWalkToTimedAction:new(playerObj, adjacent))
 	return true
 end
 
 
 function ISMowingCursor:isValid(square)
-	local x,y,z = self:getTopLeftOfSquares(square:getX(), square:getY(), square:getZ())
-	return self:isValidArea(x, y, z)
+	return self:isValidArea(square:getX(), square:getY(), square:getZ())
 end
 
 function ISMowingCursor:isValidArea(x, y, z, renderMode)
@@ -90,29 +86,30 @@ end
 
 function ISMowingCursor:render(x, y, z, square)
 	if self:isRunningAction() then return end
-	x,y,z = self:getTopLeftOfSquares(x, y, z)
+	
 	local bValid = self:isValidArea(x, y, z, true)
 	if bValid then
 		renderIsoRect(x + 1, y + 1, z, self.radius, ghc:getR(), ghc:getG(), ghc:getB(), 0.5, 1)
 	else
 		renderIsoRect(x + 1, y + 1, z, self.radius, bhc:getR(), bhc:getG(), bhc:getB(), 0.5, 1)
 	end
-	
-	if self.character:getJoypadBind() ~= -1 then return end
-	
+		
 end
 
 function ISMowingCursor:onJoypadPressButton(joypadIndex, joypadData, button)
 	if button == Joypad.AButton or button == Joypad.BButton then
 		return ISBuildingObject.onJoypadPressButton(self, joypadIndex, joypadData, button)
 	end
+    if button == Joypad.YButton then
+        return self:rotateKey(getCore():getKey("Rotate building"))
+    end
 end
 
 function ISMowingCursor:getAPrompt()
 	return getText("ContextMenu_MowGrass")
 end
 
-function ISScytheGrassCursor:getYPrompt()
+function ISMowingCursor:getYPrompt()
     return getText("ContextMenu_ChangeRadius")
 end
 
@@ -152,17 +149,6 @@ function ISMowingCursor:getClosestSquare(squares)
 	return closest
 end
 
-function ISMowingCursor:getGrassObject(square)
-	local objects = {}
-	for i=1,square:getObjects():size() do
-		local object = square:getObjects():get(i-1)
-		if instanceof(object, "IsoFire") and not object:isPermanent() then
-			table.insert(objects, object)
-		end
-	end
-	return objects
-end
-
 function ISMowingCursor:rotateKey(key)
 	if getCore():isKey("Rotate building", key) then
 		self.radius = self.radius - 1;
@@ -181,7 +167,6 @@ function ISMowingCursor:new(character, scythe)
 	o.player = character:getPlayerNum()
 	o.skipBuildAction = true
 	o.noNeedHammer = true
-	o.skipWalk = true
 	o.renderFloorHelper = true
 	o.scythe = scythe
 	o.radius = 3;
