@@ -40,13 +40,40 @@ function ContextMenu.addMowContextOption(player, context, worldObjects, test)
             break;
         end
     end
-
+    -- TODO fix empty gardening menu by add predicate item before that
+    -- TODO Create a subsub menu (lol) for Scythe and add the vanilla option and the mowing option inside
+    --      Do the same with the vanilla Rake menu and additionnaly move it into the gardening menu because TIS logic is sometimes strange.
     if gardeningOption then
         gardeningSubMenu = context:getSubMenu(gardeningOption.subOption);
     else
         gardeningOption = context:addOption(gardeningText, nil, nil);
         gardeningSubMenu = ISContextMenu:getNew(context);
         context:addSubMenu(gardeningOption, gardeningSubMenu);
+    end
+    
+    
+
+    local removeBushText = getText("ContextMenu_RemoveBush");
+    local removeBushExists = false;
+    for _, opt in ipairs(gardeningSubMenu.options) do
+        if(opt.name == removeBushText) then
+            removeBushExists = true;
+            break;
+        end
+    end
+
+    if(not removeBushExists) then
+        for _, obj in ipairs(worldObjects) do
+            local props = obj:getProperties();
+            local customName = "";
+            if(props and props:get("CustomName")) then
+                customName = props:get("CustomName");
+            end
+            
+            if(obj:getSprite() and obj:getSprite():getName() and obj:getSprite():getName():find("bushes") or customName == "Bush") then
+                gardeningSubMenu:addOption(removeBushText, worldObjects, ISWorldObjectContextMenu.onRemovePlant, false, false, player);
+            end
+        end
     end
 
     ContextMenu.addScytheContextOption(playerObj, playerInv, gardeningSubMenu, player, context, worldObjects, test);
