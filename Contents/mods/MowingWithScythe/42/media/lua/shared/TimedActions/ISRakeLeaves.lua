@@ -43,7 +43,6 @@ end
 function ISRakeLeaves:complete()
     local i = 0
 
-    -- Get grass for every square
     for x=self.sq:getX(), self.sq:getX()+self.radius-1 do
         for y=self.sq:getY(), self.sq:getY()+self.radius-1 do
             local sq = getSquare(x, y, self.sq:getZ());
@@ -59,15 +58,12 @@ function ISRakeLeaves:complete()
         ISWorldObjectContextMenu.checkWeapon(self.character);
     end
 
-    -- Muscle strain
     local skill = self.character:getPerkLevel(Perks.Farming);
     local backStrain = 1 - (skill * 0.05);
     local armStrain = 1 - (skill * 0.05);
     self.character:addBackMuscleStrain(backStrain);
     self.character:addArmMuscleStrain(armStrain);
 
-
-    --Reduce endurance
     local use = self.item:getWeight() * self.character:getFatigueMod() * 0.1;
     local useChargeDelta = 1.0;
     use = use * useChargeDelta * 0.041
