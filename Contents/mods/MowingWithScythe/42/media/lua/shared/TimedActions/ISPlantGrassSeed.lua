@@ -49,13 +49,11 @@ function ISPlantGrassSeed:complete()
 
     sendRemoveItemsFromContainer(inv, inv:RemoveAll(ISPlantGrassSeed.SEEDS_ITEM, ISPlantGrassSeed.SEEDS_REQUIRED));
 
-    local skill = self.character:getPerkLevel(Perks.Farming);
-    local backStrain = 1 - (skill * 0.05);
-    self.character:addBackMuscleStrain(backStrain);
-
     MWSGrassGrowing.requestPlantSeeds(self.sq, self.character);
 
-    addXp(self.character, Perks.Farming, 5);
+    if(SandboxVars.MowingWithScythe.XPMultiplierSowingGrass ~= 0) then
+        addXp(self.character, Perks.Farming, 2 * SandboxVars.MowingWithScythe.XPMultiplierSowingGrass);
+    end
 
     return true
 end
