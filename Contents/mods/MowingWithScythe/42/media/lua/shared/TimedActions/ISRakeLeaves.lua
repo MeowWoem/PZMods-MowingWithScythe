@@ -72,7 +72,9 @@ function ISRakeLeaves:complete()
     end
     self.character:getStats():remove(CharacterStat.ENDURANCE, use);
 
-    addXp(self.character, Perks.Farming, i);
+    if(SandboxVars.MowingWithScythe.XPMultiplierRakingLeaves ~= 0) then
+        addXp(self.character, Perks.Farming, (i/2) * SandboxVars.MowingWithScythe.XPMultiplierRakingLeaves);
+    end
 
     return true
 end
@@ -91,10 +93,11 @@ end
 function ISRakeLeaves:getLeaves(sq)
     local j = 0;
 	for i=sq:getObjects():size(),1,-1 do
-		local o = sq:getObjects():get(i-1)
+		local o = sq:getObjects():get(i-1);
 		if self.isLeaves(o) then
-			sq:transmitRemoveItemFromSquare(o)
-			local items = self.character:getInventory():AddItems("MWSMod.DeadLeaves", ZombRand(4,8));
+			sq:transmitRemoveItemFromSquare(o);
+            local amount =  ZombRand(4,8) * SandboxVars.MowingWithScythe.LeavesMultiplierRaking;
+			local items = self.character:getInventory():AddItems("MWSMod.DeadLeaves", amount);
 			sendAddItemsToContainer(self.character:getInventory(), items);
             j = j + 0.5;
 		end

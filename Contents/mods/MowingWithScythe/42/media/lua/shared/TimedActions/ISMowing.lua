@@ -107,7 +107,9 @@ function ISMowing:complete()
     end
     self.character:getStats():remove(CharacterStat.ENDURANCE, use);
 
-    addXp(self.character, Perks.Farming, i);
+    if(SandboxVars.MowingWithScythe.XPMultiplierMowing ~= 0) then
+        addXp(self.character, Perks.Farming, i * SandboxVars.MowingWithScythe.XPMultiplierMowing);
+    end
 
     return true
 end
@@ -136,15 +138,20 @@ end
 function ISMowing:getGrass(sq)
     local j = 0;
 	for i=sq:getObjects():size(),1,-1 do
-		local o = sq:getObjects():get(i-1)
+		local o = sq:getObjects():get(i-1);
 		if self.isCuttable(o) then
-			sq:transmitRemoveItemFromSquare(o)
-			local items = self.character:getInventory():AddItems("Base.GrassTuft", ZombRand(2,4));
+			sq:transmitRemoveItemFromSquare(o);
+            
+            local grassTuftAmount =  ZombRand(2,4) * SandboxVars.MowingWithScythe.GrassTuftsMultiplierMowing;
+			local items = self.character:getInventory():AddItems("Base.GrassTuft", grassTuftAmount);
 			sendAddItemsToContainer(self.character:getInventory(), items);
+
             if(ZombRand(4) == 0) then
-                local items = self.character:getInventory():AddItems("Base.GrassSeeds", ZombRand(1,5));
+                local grassSeedsAmount =  ZombRand(1,5) * SandboxVars.MowingWithScythe.GrassSeedsMultiplierMowing;
+                local items = self.character:getInventory():AddItems("Base.GrassSeeds", grassSeedsAmount);
                 sendAddItemsToContainer(self.character:getInventory(), items);
             end
+
             j = j + 1;
 		end
 	end
