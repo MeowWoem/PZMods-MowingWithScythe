@@ -46,7 +46,7 @@ function MWSGrassGrowing.registerRegrowthZone(square)
     local metaGrid = getWorld():getMetaGrid()
 
     local zone = MWSGrassGrowing.getGrassRegrowthZone(square)
-    local timestamp = getGameTime():getCalender():getTimeInMillis() // 1000
+    local timestamp = getGameTime():getCalender():getTimeInMillis() / 1000
 
     if not zone then
         zone = metaGrid:registerZone(
