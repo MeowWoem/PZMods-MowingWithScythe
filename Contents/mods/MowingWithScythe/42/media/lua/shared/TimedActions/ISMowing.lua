@@ -141,6 +141,10 @@ function ISMowing:getGrass(sq)
 			sq:transmitRemoveItemFromSquare(o)
 			local items = self.character:getInventory():AddItems("Base.GrassTuft", ZombRand(2,4));
 			sendAddItemsToContainer(self.character:getInventory(), items);
+            if(ZombRand(4) == 0) then
+                local items = self.character:getInventory():AddItems("Base.GrassSeeds", ZombRand(1,5));
+                sendAddItemsToContainer(self.character:getInventory(), items);
+            end
             j = j + 1;
 		end
 	end
