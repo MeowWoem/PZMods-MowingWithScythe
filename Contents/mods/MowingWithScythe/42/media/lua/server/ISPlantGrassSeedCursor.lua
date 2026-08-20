@@ -41,6 +41,14 @@ function ISPlantGrassSeedCursor:isValidArea(x, y, z, renderMode)
 	if not sq then return false end
 
 	local canPlant = MWSGrassGrowing.canPlantSeeds(sq);
+
+	local playerInv = self.character:getInventory();
+
+	local seedCount = playerInv:getItemCountRecurse(ISPlantGrassSeed.SEEDS_ITEM);
+	local seedItem = playerInv:getFirstTypeRecurse(ISPlantGrassSeed.SEEDS_ITEM);
+
+	canPlant = canPlant and seedItem and seedCount >= ISPlantGrassSeed.SEEDS_REQUIRED;
+	
 	local isCouldSee = sq:isCouldSee(self.character:getPlayerNum());
 
 	return canPlant and isCouldSee;
