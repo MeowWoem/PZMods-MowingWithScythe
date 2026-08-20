@@ -6,11 +6,24 @@ MWSGrassGrowing = MWSGrassGrowing or {}
 
 MWSGrassGrowing.MODULE_NAME = "MWSGrassGrowing"
 
-MWSGrassGrowing.GRASS_FLOOR_SPRITE = "blends_natural_01_16"
+MWSGrassGrowing.GRASS_FLOOR_SPRITES = {
+    "blends_natural_01_16",
+    "blends_natural_01_21",
+    "blends_natural_01_22",
+    "blends_natural_01_23",
+}
+
 MWSGrassGrowing.SEEDED_OVERLAY_SPRITE = "blends_natural_01_87"
 
 MWSGrassGrowing.ZONE_TYPE = "GrassRegrowth"
 MWSGrassGrowing.ZONE_RADIUS = 20
+
+local function getDeterministicSpriteIndex(square, max)
+    local x, y = square:getX(), square:getY();
+    -- Combinaison arithmétique avec de grands nombres premiers
+    local hash = (x * 374761393 + y * 668265263) % 2147483647;
+    return (math.floor(hash) % max) + 1;
+end
 
 function MWSGrassGrowing.canPlantSeeds(square)
     if not square then return false end
@@ -28,11 +41,11 @@ function MWSGrassGrowing.canPlantSeeds(square)
             return true;
         end
 
+        -- Fallback to be sure
         local spriteName = floor:getSprite():getName()
-        -- (64/69/70/71 + floors_exterior_natural_16-19)
-        if spriteName ~= "blends_natural_01_64" then return false end
+        if spriteName == "blends_natural_01_64" then return true end
 
-        return true
+        return false
     end
     return false;
 end
@@ -78,10 +91,14 @@ function MWSGrassGrowing.plantSeedsOnSquare(square)
     end
 
     local floor = square:getFloor()
-
-    local grassSprite = getSprite(MWSGrassGrowing.GRASS_FLOOR_SPRITE)
+    local grassSpriteIndex = getDeterministicSpriteIndex(square, #MWSGrassGrowing.GRASS_FLOOR_SPRITES);
+    -- local grassSpriteIndex = ZombRand(1, (#MWSGrassGrowing.GRASS_FLOOR_SPRITES) + 1);
+    print(grassSpriteIndex);
+    local grassSprite = MWSGrassGrowing.GRASS_FLOOR_SPRITES[grassSpriteIndex];
+    print(grassSprite);
+    local grassSprite = getSprite(grassSprite)
     if not grassSprite then
-        print("[MWSGrassGrowing] ERROR : sprite not found -> " .. tostring(MWSGrassGrowing.GRASS_FLOOR_SPRITE))
+        print("[MWSGrassGrowing] ERROR : sprite not found -> " .. grassSprite)
         return false
     end
     floor:setSprite(grassSprite)
