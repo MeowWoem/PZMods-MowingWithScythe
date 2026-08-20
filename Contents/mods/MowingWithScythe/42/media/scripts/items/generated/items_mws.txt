@@ -3,7 +3,6 @@ module Base
 	
 	item DeadLeaves
     {	
-        DisplayName = Dead Leaves,
         DisplayCategory = Junk,
         ItemType = base:normal,
         Weight = 0.01,
@@ -11,6 +10,16 @@ module Base
         FireFuelRatio = 1.8,
         Icon = DeadLeaves,
         WorldStaticModel = DeadLeaves,
+    }
+	
+	item GrassSeeds
+    {	
+        DisplayCategory = Gardening,
+        ItemType = base:normal,
+        Icon = Seeds_Generic,
+        Weight = 0.02,
+        WorldStaticModel = Seeds_Generic,
+        Tags = base:isseed,
     }
 	
 }
