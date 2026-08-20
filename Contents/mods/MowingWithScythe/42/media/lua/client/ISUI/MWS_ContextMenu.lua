@@ -24,6 +24,11 @@ function ContextMenu.onRakeLeaves(player, rake)
 	getCell():setDrag(bo, bo.player);
 end
 
+function ContextMenu.onPlantGrassSeeds(player, seedItem)
+	local bo = ISPlantGrassSeedCursor:new(player, seedItem);
+	getCell():setDrag(bo, bo.player);
+end
+
 function ContextMenu.addMowContextOption(player, context, worldObjects, test)
 	
 	local playerObj = getSpecificPlayer(player);
@@ -78,6 +83,7 @@ function ContextMenu.addMowContextOption(player, context, worldObjects, test)
 
     ContextMenu.addScytheContextOption(playerObj, playerInv, gardeningSubMenu, player, context, worldObjects, test);
     ContextMenu.addRakeContextOption(playerObj, playerInv, gardeningSubMenu, player, context, worldObjects, test);
+    ContextMenu.addPlantGrassSeedContextOption(playerObj, playerInv, gardeningSubMenu, player, context, worldObjects, test);
 
 end
 
@@ -106,6 +112,22 @@ function ContextMenu.addRakeContextOption(playerObj, playerInv, gardeningSubMenu
 
         local opt = gardeningSubMenu:addOption(getText("ContextMenu_RakeLeaves"), playerObj, ContextMenu.onRakeLeaves, rake);
 		opt.iconTexture = rake:getTexture();
+
+    end
+
+end
+
+function ContextMenu.addPlantGrassSeedContextOption(playerObj, playerInv, gardeningSubMenu, player, context, worldObjects, test)
+
+	local seedCount = playerInv:getItemCountRecurse(ISPlantGrassSeed.SEEDS_ITEM);
+	local seedItem = playerInv:getFirstTypeRecurse(ISPlantGrassSeed.SEEDS_ITEM);
+
+    if seedItem and seedCount >= ISPlantGrassSeed.SEEDS_REQUIRED and not playerObj:getVehicle() then
+
+        if test == true then return true; end
+
+        local opt = gardeningSubMenu:addOption(getText("ContextMenu_PlantGrassSeeds"), playerObj, ContextMenu.onPlantGrassSeeds, seedItem);
+		opt.iconTexture = seedItem:getTexture();
 
     end
 

@@ -1,0 +1,84 @@
+--***********************************************************
+--**                       AMENOPHIS                       **
+--***********************************************************
+
+require "TimedActions/ISBaseTimedAction"
+require "MWSGrassGrowingShared"
+require "MWSGrassGrowingClient"
+
+ISPlantGrassSeed = ISBaseTimedAction:derive("ISPlantGrassSeed");
+
+ISPlantGrassSeed.SEEDS_ITEM = "GrassSeeds";
+ISPlantGrassSeed.SEEDS_REQUIRED = 10;
+
+function ISPlantGrassSeed:isValid()
+    return MWSGrassGrowing.canPlantSeeds(self.sq);
+end
+
+function ISPlantGrassSeed:update()
+    self.character:setMetabolicTarget(Metabolics.LightDomestic);
+end
+
+function ISPlantGrassSeed:start()
+    self.item:setJobType(getText("ContextMenu_PlantGrassSeeds"));
+    self.item:setJobDelta(0.0);
+    self:setActionAnim("Loot")
+    self:setOverrideHandModels(self.item, nil)
+end
+
+function ISPlantGrassSeed:stop()
+    self.item:setJobDelta(0.0);
+    ISBaseTimedAction.stop(self);
+end
+
+function ISPlantGrassSeed:perform()
+    self.item:setJobDelta(0.0);
+    ISBaseTimedAction.perform(self);
+end
+
+function ISPlantGrassSeed:complete()
+    if not MWSGrassGrowing.canPlantSeeds(self.sq) then
+        return true;
+    end
+
+    local inv = self.character:getInventory();
+
+    local seedCount = inv:getItemCountRecurse(ISPlantGrassSeed.SEEDS_ITEM);
+    if seedCount < ISPlantGrassSeed.SEEDS_REQUIRED then
+        return true;
+    end
+
+    for i = 1, ISPlantGrassSeed.SEEDS_REQUIRED do
+        local seed = inv:getFirstTypeRecurse(ISPlantGrassSeed.SEEDS_ITEM);
+        if seed then
+            inv:Remove(seed);
+        end
+    end
+
+    local skill = self.character:getPerkLevel(Perks.Farming);
+    local backStrain = 1 - (skill * 0.05);
+    self.character:addBackMuscleStrain(backStrain);
+
+    MWSGrassGrowingClient.requestPlantSeeds(self.sq, self.character);
+
+    addXp(self.character, Perks.Farming, 5);
+
+    return true
+end
+
+function ISPlantGrassSeed:getDuration()
+    if self.character:isTimedActionInstant() then
+        return 1
+    end
+    local skill = self.character:getPerkLevel(Perks.Farming);
+    return math.max(50, 200 - skill * 10);
+end
+
+function ISPlantGrassSeed:new(character, item, sq)
+    local o = ISBaseTimedAction.new(self, character)
+
+    o.item = item;
+    o.sq = sq or character:getCurrentSquare();
+    o.maxTime = o:getDuration();
+    return o
+end
