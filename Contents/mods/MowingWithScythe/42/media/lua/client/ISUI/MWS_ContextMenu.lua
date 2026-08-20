@@ -45,18 +45,19 @@ function ContextMenu.addMowContextOption(player, context, worldObjects, test)
             break;
         end
     end
-    -- TODO fix empty gardening menu by add predicate item before that
+
+    local gardeningMenuExist = false;
+
     -- TODO Create a subsub menu (lol) for Scythe and add the vanilla option and the mowing option inside
     --      Do the same with the vanilla Rake menu and additionnaly move it into the gardening menu because TIS logic is sometimes strange.
     if gardeningOption then
         gardeningSubMenu = context:getSubMenu(gardeningOption.subOption);
+        gardeningMenuExist = true;
     else
-        gardeningOption = context:addOption(gardeningText, nil, nil);
         gardeningSubMenu = ISContextMenu:getNew(context);
-        context:addSubMenu(gardeningOption, gardeningSubMenu);
     end
     
-    
+    local gardeningMenuShouldAdded = false;
 
     local removeBushText = getText("ContextMenu_RemoveBush");
     local removeBushExists = false;
@@ -81,10 +82,15 @@ function ContextMenu.addMowContextOption(player, context, worldObjects, test)
         end
     end
 
-    ContextMenu.addScytheContextOption(playerObj, playerInv, gardeningSubMenu, player, context, worldObjects, test);
-    ContextMenu.addRakeContextOption(playerObj, playerInv, gardeningSubMenu, player, context, worldObjects, test);
-    ContextMenu.addPlantGrassSeedContextOption(playerObj, playerInv, gardeningSubMenu, player, context, worldObjects, test);
+    gardeningMenuShouldAdded = gardeningMenuShouldAdded or ContextMenu.addScytheContextOption(playerObj, playerInv, gardeningSubMenu, player, context, worldObjects, test);
+    gardeningMenuShouldAdded = gardeningMenuShouldAdded or ContextMenu.addRakeContextOption(playerObj, playerInv, gardeningSubMenu, player, context, worldObjects, test);
+    gardeningMenuShouldAdded = gardeningMenuShouldAdded or ContextMenu.addPlantGrassSeedContextOption(playerObj, playerInv, gardeningSubMenu, player, context, worldObjects, test);
 
+
+    if(not gardeningMenuExist and gardeningMenuShouldAdded) then
+        gardeningOption = context:addOption(gardeningText, nil, nil);
+        context:addSubMenu(gardeningOption, gardeningSubMenu);
+    end
 end
 
 function ContextMenu.addScytheContextOption(playerObj, playerInv, gardeningSubMenu, player, context, worldObjects, test)
@@ -93,13 +99,13 @@ function ContextMenu.addScytheContextOption(playerObj, playerInv, gardeningSubMe
 
     if scythe and not playerObj:getVehicle() then
 
-        if test == true then return true; end
+        if test == true then return false; end
 
         local opt = gardeningSubMenu:addOption(getText("ContextMenu_MowGrass"), playerObj, ContextMenu.onMowGrass, scythe);
 		opt.iconTexture = scythe:getTexture();
-
+        return true;
     end
-
+    return false;
 end
 
 function ContextMenu.addRakeContextOption(playerObj, playerInv, gardeningSubMenu, player, context, worldObjects, test)
@@ -108,13 +114,13 @@ function ContextMenu.addRakeContextOption(playerObj, playerInv, gardeningSubMenu
 
     if rake and not playerObj:getVehicle() then
 
-        if test == true then return true; end
+        if test == true then return false; end
 
         local opt = gardeningSubMenu:addOption(getText("ContextMenu_RakeLeaves"), playerObj, ContextMenu.onRakeLeaves, rake);
 		opt.iconTexture = rake:getTexture();
-
+        return true;
     end
-
+    return false;
 end
 
 function ContextMenu.addPlantGrassSeedContextOption(playerObj, playerInv, gardeningSubMenu, player, context, worldObjects, test)
@@ -124,13 +130,13 @@ function ContextMenu.addPlantGrassSeedContextOption(playerObj, playerInv, garden
 
     if seedItem and seedCount >= ISPlantGrassSeed.SEEDS_REQUIRED and not playerObj:getVehicle() then
 
-        if test == true then return true; end
+        if test == true then return false; end
 
         local opt = gardeningSubMenu:addOption(getText("ContextMenu_PlantGrassSeeds"), playerObj, ContextMenu.onPlantGrassSeeds, seedItem);
 		opt.iconTexture = seedItem:getTexture();
-
+        return true;
     end
-
+    return false;
 end
 
 Events.OnFillWorldObjectContextMenu.Add(ContextMenu.addMowContextOption);
