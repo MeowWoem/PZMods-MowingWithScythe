@@ -2,5 +2,7 @@
     "ContextMenu_MowGrass": "Tondre la pelouse",
     "ContextMenu_RakeLeaves": "Ratteler les feuilles",
     "ContextMenu_ScytheGrass": "Défricher",
-    "ContextMenu_PlantGrassSeeds": "Semer des graines de gazon"
+    "ContextMenu_PlantGrassSeeds": "Semer des graines de gazon",
+    "ContextMenu_YouHave": "Vous en avez :",
+    "ContextMenu_SowingGrassSeedsRequirement": "Semer des graines de gazon demande %d graines"
 }

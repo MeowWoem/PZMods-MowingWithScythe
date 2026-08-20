@@ -128,12 +128,29 @@ function ContextMenu.addPlantGrassSeedContextOption(playerObj, playerInv, garden
 	local seedCount = playerInv:getItemCountRecurse(ISPlantGrassSeed.SEEDS_ITEM);
 	local seedItem = playerInv:getFirstTypeRecurse(ISPlantGrassSeed.SEEDS_ITEM);
 
-    if seedItem and seedCount >= ISPlantGrassSeed.SEEDS_REQUIRED and not playerObj:getVehicle() then
+    if seedItem and not playerObj:getVehicle() then
 
         if test == true then return false; end
 
         local opt = gardeningSubMenu:addOption(getText("ContextMenu_PlantGrassSeeds"), playerObj, ContextMenu.onPlantGrassSeeds, seedItem);
 		opt.iconTexture = seedItem:getTexture();
+
+        local tooltipDesc = string.format(getText("ContextMenu_SowingGrassSeedsRequirement"), 5);
+        if seedCount >= ISPlantGrassSeed.SEEDS_REQUIRED then
+		    tooltipDesc = tooltipDesc .. "\n<INDENT:8><RGB:1,1,1>";
+        else
+            tooltipDesc = tooltipDesc .. "\n<INDENT:8><RGB:1,0,0>";
+        end
+
+        local optTooltip = ISWorldObjectContextMenu.addToolTip();
+        optTooltip.description = string.format(tooltipDesc .. getText("ContextMenu_YouHave").. " %d/%d", seedCount, ISPlantGrassSeed.SEEDS_REQUIRED);
+        optTooltip.maxLineWidth = 512;
+        opt.toolTip = optTooltip;
+
+        if(seedCount < ISPlantGrassSeed.SEEDS_REQUIRED) then
+            opt.notAvailable = true;
+        end
+
         return true;
     end
     return false;
