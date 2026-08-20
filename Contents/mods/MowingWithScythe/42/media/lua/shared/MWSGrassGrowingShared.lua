@@ -4,6 +4,8 @@
 
 MWSGrassGrowing = MWSGrassGrowing or {}
 
+MWSGrassGrowing.MODULE_NAME = "MWSGrassGrowing"
+
 MWSGrassGrowing.GRASS_FLOOR_SPRITE = "blends_natural_01_16"
 MWSGrassGrowing.SEEDED_OVERLAY_SPRITE = "blends_natural_01_87"
 
@@ -46,7 +48,7 @@ function MWSGrassGrowing.registerRegrowthZone(square)
     local metaGrid = getWorld():getMetaGrid()
 
     local zone = MWSGrassGrowing.getGrassRegrowthZone(square)
-    local timestamp = getGameTime():getCalender():getTimeInMillis() / 1000
+    local timestamp = math.floor(getGameTime():getCalender():getTimeInMillis() / 1000)
 
     if not zone then
         zone = metaGrid:registerZone(
@@ -87,6 +89,26 @@ function MWSGrassGrowing.plantSeedsOnSquare(square)
     square:RecalcAllWithNeighbours(true)
 
     MWSGrassGrowing.registerRegrowthZone(square)
+
+    return true
+end
+
+function MWSGrassGrowing.requestPlantSeeds(square, player)
+    if not MWSGrassGrowing.canPlantSeeds(square) then
+        return false
+    end
+
+    local args = {
+        x = square:getX(),
+        y = square:getY(),
+        z = square:getZ(),
+    }
+
+    if isMultiplayer() and isClient() then
+        sendServerCommand(MWSGrassGrowing.MODULE_NAME, "requestPlantSeeds", args)
+    else
+        MWSGrassGrowing.plantSeedsOnSquare(square)
+    end
 
     return true
 end

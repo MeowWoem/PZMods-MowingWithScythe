@@ -4,12 +4,11 @@
 
 require "TimedActions/ISBaseTimedAction"
 require "MWSGrassGrowingShared"
-require "MWSGrassGrowingClient"
 
 ISPlantGrassSeed = ISBaseTimedAction:derive("ISPlantGrassSeed");
 
 ISPlantGrassSeed.SEEDS_ITEM = "GrassSeeds";
-ISPlantGrassSeed.SEEDS_REQUIRED = 10;
+ISPlantGrassSeed.SEEDS_REQUIRED = 5;
 
 function ISPlantGrassSeed:isValid()
     return MWSGrassGrowing.canPlantSeeds(self.sq);
@@ -48,18 +47,13 @@ function ISPlantGrassSeed:complete()
         return true;
     end
 
-    for i = 1, ISPlantGrassSeed.SEEDS_REQUIRED do
-        local seed = inv:getFirstTypeRecurse(ISPlantGrassSeed.SEEDS_ITEM);
-        if seed then
-            inv:Remove(seed);
-        end
-    end
+    sendRemoveItemsFromContainer(inv, inv:RemoveAll(ISPlantGrassSeed.SEEDS_ITEM, ISPlantGrassSeed.SEEDS_REQUIRED));
 
     local skill = self.character:getPerkLevel(Perks.Farming);
     local backStrain = 1 - (skill * 0.05);
     self.character:addBackMuscleStrain(backStrain);
 
-    MWSGrassGrowingClient.requestPlantSeeds(self.sq, self.character);
+    MWSGrassGrowing.requestPlantSeeds(self.sq, self.character);
 
     addXp(self.character, Perks.Farming, 5);
 

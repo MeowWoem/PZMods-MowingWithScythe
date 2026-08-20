@@ -6,23 +6,22 @@ require "MWSGrassGrowingShared"
 
 MWSGrassGrowingServer = MWSGrassGrowingServer or {}
 
-local MODULE_NAME = "MWSGrassGrowing"
 local NOTIFY_RADIUS = 40
 
 function MWSGrassGrowingServer.OnClientCommand(module, command, player, args)
-    if module ~= MODULE_NAME then return end
+    if module ~= MWSGrassGrowing.MODULE_NAME then return end
 
     if command == "requestPlantSeeds" then
         local square = getCell():getGridSquare(args.x, args.y, args.z)
 
         if not square then
-            sendClientCommand(player, MODULE_NAME, "denyPlantSeeds", args)
+            sendClientCommand(player, MWSGrassGrowing.MODULE_NAME, "denyPlantSeeds", args)
             return
         end
 
         local dist = IsoUtils.DistanceManhatten(player:getX(), player:getY(), square:getX(), square:getY())
         if dist > 2 then
-            sendClientCommand(player, MODULE_NAME, "denyPlantSeeds", args)
+            sendClientCommand(player, MWSGrassGrowing.MODULE_NAME, "denyPlantSeeds", args)
             return
         end
 
@@ -31,7 +30,7 @@ function MWSGrassGrowingServer.OnClientCommand(module, command, player, args)
         if success then
             MWSGrassGrowingServer.notifyNearbyPlayers(square, args)
         else
-            sendClientCommand(player, MODULE_NAME, "denyPlantSeeds", args)
+            sendClientCommand(player, MWSGrassGrowing.MODULE_NAME, "denyPlantSeeds", args)
         end
     end
 end
@@ -42,7 +41,7 @@ function MWSGrassGrowingServer.notifyNearbyPlayers(square, args)
         local p = players:get(i)
         local dist = IsoUtils.DistanceManhatten(p:getX(), p:getY(), square:getX(), square:getY())
         if dist <= NOTIFY_RADIUS then
-            sendClientCommand(p, MODULE_NAME, "confirmPlantSeeds", args)
+            sendClientCommand(p, MWSGrassGrowing.MODULE_NAME, "confirmPlantSeeds", args)
         end
     end
 end
