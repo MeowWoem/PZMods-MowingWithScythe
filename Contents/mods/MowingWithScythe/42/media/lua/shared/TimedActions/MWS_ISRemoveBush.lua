@@ -12,10 +12,9 @@ function ISRemoveBush:getBushObject(square)
             if(props and props:get("CustomName")) then
                 customName = props:get("CustomName");
             end
-			local name = o:getSprite():getName();
-            if((name and name:find("bushes")) or customName == "Bush") then
-                return o;
-            end
+			if((o:getSprite() and o:getSprite():getName() and o:getSprite():getName():find("bushes")) or customName == "Bush") then
+				return o;
+			end
         end
 	end
 	return o;
