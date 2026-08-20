@@ -1,0 +1,67 @@
+VERSION = 1,
+
+option MowingWithScythe.GrassTuftsMultiplierMowing
+{
+    type = double,
+    min = 0.1,
+    max = 100,
+    default = 1,
+    page = MowingWithScythe,
+    translation = MowingWithScythe_GrassTuftsMultiplierMowing,
+    tooltip = MowingWithScythe_GrassTuftsMultiplierMowing_tooltip,
+}
+
+option MowingWithScythe.GrassSeedsMultiplierMowing
+{
+    type = double,
+    min = 0.1,
+    max = 100,
+    default = 1,
+    page = MowingWithScythe,
+    translation = MowingWithScythe_GrassSeedsMultiplierMowing,
+    tooltip = MowingWithScythe_GrassSeedsMultiplierMowing_tooltip,
+}
+
+option MowingWithScythe.XPMultiplierMowing
+{
+    type = double,
+    min = 0,
+    max = 100,
+    default = 1,
+    page = MowingWithScythe,
+    translation = MowingWithScythe_XPMultiplierMowing,
+    tooltip = MowingWithScythe_XPMultiplierMowing_tooltip,
+}
+
+option MowingWithScythe.LeavesMultiplierRaking
+{
+    type = double,
+    min = 0.1,
+    max = 100,
+    default = 1,
+    page = MowingWithScythe,
+    translation = MowingWithScythe_LeavesMultiplierRaking,
+    tooltip = MowingWithScythe_LeavesMultiplierRaking_tooltip,
+}
+
+option MowingWithScythe.XPMultiplierRakingLeaves
+{
+    type = double,
+    min = 0,
+    max = 100,
+    default = 1,
+    page = MowingWithScythe,
+    translation = MowingWithScythe_XPMultiplierRakingLeaves,
+    tooltip = MowingWithScythe_XPMultiplierRakingLeaves_tooltip,
+}
+
+option MowingWithScythe.XPMultiplierSowingGrass
+{
+    type = double,
+    min = 0,
+    max = 100,
+    default = 1,
+    page = MowingWithScythe,
+    translation = MowingWithScythe_XPMultiplierSowingGrass,
+    tooltip = MowingWithScythe_XPMultiplierSowingGrass_tooltip,
+}

@@ -1,0 +1,22 @@
+{
+    "Sandbox_MowingWithScythe": "Cuidado del césped: Guadaña y Rastrillo",
+
+    "Sandbox_MowingWithScythe_XPMultiplierMowing": "Siega - Multiplicador de XP",
+    "Sandbox_MowingWithScythe_XPMultiplierMowing_tooltip": "Permite ajustar la XP obtenida al segar el césped.<br>Establece 0 para desactivar la ganancia de XP.",
+
+    "Sandbox_MowingWithScythe_GrassTuftsMultiplierMowing": "Siega - Multiplicador de matas de hierba obtenidas",
+    "Sandbox_MowingWithScythe_GrassTuftsMultiplierMowing_tooltip": "Permite ajustar la cantidad de matas de hierba obtenidas al segar el césped.",
+    
+    "Sandbox_MowingWithScythe_GrassSeedsMultiplierMowing": "Siega - Multiplicador de semillas de césped obtenidas",
+    "Sandbox_MowingWithScythe_GrassSeedsMultiplierMowing_tooltip": "Permite ajustar la cantidad de semillas de césped obtenidas al segar el césped.",
+
+    "Sandbox_MowingWithScythe_XPMultiplierRakingLeaves": "Rastrillado de hojas - Multiplicador de XP",
+    "Sandbox_MowingWithScythe_XPMultiplierRakingLeaves_tooltip": "Permite ajustar la XP obtenida al rastrillar hojas.<br>Establece 0 para desactivar la ganancia de XP.",
+
+    "Sandbox_MowingWithScythe_LeavesMultiplierRaking": "Rastrillado de hojas - Multiplicador de hojas muertas obtenidas",
+    "Sandbox_MowingWithScythe_LeavesMultiplierRaking_tooltip": "Permite ajustar la cantidad de hojas muertas obtenidas al rastrillar hojas.",
+
+    "Sandbox_MowingWithScythe_XPMultiplierSowingGrass": "Siembra de semillas de césped - Multiplicador de XP",
+    "Sandbox_MowingWithScythe_XPMultiplierSowingGrass_tooltip": "Permite ajustar la XP obtenida al sembrar semillas de césped.<br>Establece 0 para desactivar la ganancia de XP."
+
+}

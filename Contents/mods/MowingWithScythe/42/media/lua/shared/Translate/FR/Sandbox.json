@@ -1,0 +1,22 @@
+{
+    "Sandbox_MowingWithScythe": "Entretien de la pelouse : Faux et Râteau",
+
+    "Sandbox_MowingWithScythe_XPMultiplierMowing": "Tonte - Multiplicateur d'XP",
+    "Sandbox_MowingWithScythe_XPMultiplierMowing_tooltip": "Permet d'ajuster l'XP gagnée lors de l'action de tonte de la pelouse.<br>Mettre à 0 pour désactiver le gain d'XP.",
+
+    "Sandbox_MowingWithScythe_GrassTuftsMultiplierMowing": "Tonte - Multiplicateur de touffes d'herbe obtenues",
+    "Sandbox_MowingWithScythe_GrassTuftsMultiplierMowing_tooltip": "Permet d'ajuster le nombre de touffes d'herbe obtenues lors de l'action de tonte de la pelouse.",
+
+    "Sandbox_MowingWithScythe_GrassSeedsMultiplierMowing": "Tonte - Multiplicateur de graines de gazon obtenues",
+    "Sandbox_MowingWithScythe_GrassSeedsMultiplierMowing_tooltip": "Permet d'ajuster le nombre de graines de gazon obtenues lors de l'action de tonte de la pelouse.",
+
+    "Sandbox_MowingWithScythe_XPMultiplierRakingLeaves": "Ramassage des feuilles - Multiplicateur d'XP",
+    "Sandbox_MowingWithScythe_XPMultiplierRakingLeaves_tooltip": "Permet d'ajuster l'XP gagnée lors de l'action de ramassage des feuilles.<br>Mettre à 0 pour désactiver le gain d'XP.",
+
+    "Sandbox_MowingWithScythe_LeavesMultiplierRaking": "Ramassage des feuilles - Multiplicateur de feuilles mortes obtenues",
+    "Sandbox_MowingWithScythe_LeavesMultiplierRaking_tooltip": "Permet d'ajuster le nombre de feuilles mortes obtenues lors de l'action de ramassage des feuilles.",
+
+    "Sandbox_MowingWithScythe_XPMultiplierSowingGrass": "Semis de graines de gazon - Multiplicateur d'XP",
+    "Sandbox_MowingWithScythe_XPMultiplierSowingGrass_tooltip": "Permet d'ajuster l'XP gagnée lors de l'action de semis de graines de gazon.<br>Mettre à 0 pour désactiver le gain d'XP."
+
+}
