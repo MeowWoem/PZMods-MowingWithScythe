@@ -21,13 +21,20 @@ function MWSGrassGrowing.canPlantSeeds(square)
 
     local props = floor:getSprite():getProperties()
 
-    if props:has("grassFloor") then return false end
+    if(props) then
+        if props:has("grassFloor") then
+            return false;
+        elseif(props:has("FloorMaterial") and props:get("FloorMaterial")) then
+            return true;
+        end
 
-    local spriteName = floor:getSprite():getName()
-    -- (64/69/70/71 + floors_exterior_natural_16-19)
-    if spriteName ~= "blends_natural_01_64" then return false end
+        local spriteName = floor:getSprite():getName()
+        -- (64/69/70/71 + floors_exterior_natural_16-19)
+        if spriteName ~= "blends_natural_01_64" then return false end
 
-    return true
+        return true
+    end
+    return false;
 end
 
 function MWSGrassGrowing.getGrassRegrowthZone(square)
