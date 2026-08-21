@@ -1,0 +1,90 @@
+[ v1.0.0 - 05.04.2025 ]
+Release
+[ ------ ]
+
+[ v1.1.0 - 07.31.2026 ]
+Added:
+- Added muscle strain mechanics (back and arm strain) when mowing grass.
+- Higher Farming skill now reduces muscle strain penalties.
+- Mowing now consumes endurance based on tool weight, fatigue, and grip type.
+- Mowing now grants Farming XP based on the number of tiles cleared.
+
+Changed:
+- Higher Farming skill now reduces the time required to clear grass and plants.
+
+Fixed:
+- Characters will now properly move closer to target tiles before mowing.
+[ ------ ]
+
+[ v1.2.0 - 08.04.2026 ]
+Changed:
+- Enhanced Field Detection: Improved valid area detection—farm fields can now be mowed in addition to regular grass.
+- Visual Preview: Added a highlighted outline on grass tiles queued for mowing.
+- UI Overhaul: Moved the mowing option under the Gardening context submenu and assigned dynamic tool icons.
+- Vanilla Text Clarification: Renamed the vanilla "Scythe grass" option to prevent confusion with lawn mowing.
+
+Fixed:
+- XP Bug Fix: Fixed an issue where awarded Farming XP was not accurately proportional to the amount of grass mowed.
+[ ------ ]
+
+[ v1.3.0 - THE RAKE UPDATE - 08.05.2026 ]
+Changed:
+- REBRANDING: The mod is now named Lawn Care to better reflect its expanding capabilities.
+
+Added:
+- Added the ability to collect fallen leaves using a rake.
+
+Fixed:
+- Renamed Lua files to prevent potential overrides by other mods.
+[ ------ ]
+
+[ v1.3.1 - 08.05.2026 ]
+Fixed:
+- Fixed controller support issues.
+[ ------ ]
+
+[ v1.3.2 - 08.16.2026 ]
+Fixed:
+- Fixed a vanilla bug that prevented certain bushes from being cut, and added support for bushes that could previously be picked up like furniture but not cleared.
+[ ------ ]
+
+[ v1.4.0 - THE GRASS SOWING UPDATE - 08.20.2026 ]
+Added:
+- Added a new item: Grass Seeds.
+- Added the ability to sow grass seeds on player-placed dirt (using a dirt bag) to regrow grass (support for other dirt ground tiles will follow in upcoming updates).
+- Added a chance to gather Grass Seeds when clearing high grass with a scythe.
+
+Fixed:
+- Fixed a crash (NullPointerException) in MWS_ISRemoveBush.lua:15 when removing bushes.
+[ ------ ]
+
+[ v1.4.1 - 08.20.2026 ]
+Changed:
+- Expanded Sowing: Added support for sowing Grass Seeds on all valid ground tiles.
+
+Fixed:
+- Fixed cursor validation in ISRemovePlantCursor to prevent ghost actions when running out of seeds.
+- Fixed a potential NullPointerException in ISRemoveBush.lua when checking bush objects.
+[ ------ ]
+
+[ v1.4.2 - 08.20.2026 ]
+Fixed:
+- The Gardening submenu no longer appears when empty.
+[ ------ ]
+
+[ v1.5.0 - 08.20.2026 ]
+Added:
+- Added new sandbox options to adjust the XP multiplier and items gained from mod actions (grass tufts, grass seeds, dead leaves).
+[ ------ ]
+
+[ v1.5.1 - 08/21/2026 ]
+Added:
+- Added a tooltip to the "Sow grass seeds" option displaying the required seed count.
+- Added support for Mod Update and Alert System. Now you can see my changelogs in game.
+
+Changed:
+- Renamed the context menu option to "Sow grass seeds" (was "Sowing grass seeds").
+- The "Sow grass seeds" option now appears even if the player only has a single "Grass Seeds" item.
+- Sowing grass seeds now randomly selects from 4 different grass sprite variations for a more natural look.
+- Sowing grass seeds no longer causes back pain.
+[ ------ ]
