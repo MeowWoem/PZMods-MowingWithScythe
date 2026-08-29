@@ -1,4 +1,6 @@
 {
     "Base.DeadLeaves": "Dead Leaves",
-    "Base.GrassSeeds": "Grass Seeds"
+    "Base.GrassSeeds": "Grass Seeds",
+    "Base.GrassSeedsBag": "Seed Packet - Grass",
+    "Base.GrassSeedsBag_Empty": "Empty Seed Packet - Grass"
 }

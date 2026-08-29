@@ -1,4 +1,6 @@
 {
     "Base.DeadLeaves": "Hojas muertas",
-    "Base.GrassSeeds": "Semillas de pasto"
+    "Base.GrassSeeds": "Semillas de pasto",
+    "Base.GrassSeedsBag": "Paquete De Semillas - Pasto",
+    "Base.GrassSeedsBag_Empty": "Paquete De Semillas Vacío - Pasto"
 }

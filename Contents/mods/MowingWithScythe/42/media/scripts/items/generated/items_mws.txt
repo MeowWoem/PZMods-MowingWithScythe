@@ -22,4 +22,34 @@ module Base
         Tags = base:isseed,
     }
 	
+	item GrassSeedsBag
+    {	
+        DisplayCategory = Gardening,
+        ItemType = base:literature,
+        Icon = Seeds_Grass,
+        Weight = 0.1,
+        StaticModel = GrassSeedBag_Ground,
+        WorldStaticModel = GrassSeedBag_Ground,
+        ReadType = photo,
+        Tags = base:fastread;base:picture,
+        /*
+        DoubleClickRecipe = OpenPacketOfSeeds,
+        */
+    }
+	
+	item GrassSeedsBag_Empty
+    {	
+        DisplayCategory = RecipeResource,
+        ItemType = base:literature,
+        Icon = Seeds_Grass,
+        Weight = 0.1,
+        StaticModel = GrassSeedBag_Ground,
+        WorldStaticModel = GrassSeedBag_Ground,
+        ReadType = photo,
+        Tags = base:fastread;base:picture,
+        /*
+        DoubleClickRecipe = OpenPacketOfSeeds,
+        */
+    }
+	
 }

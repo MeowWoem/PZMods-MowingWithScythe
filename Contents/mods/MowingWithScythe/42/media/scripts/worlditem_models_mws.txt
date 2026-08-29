@@ -6,4 +6,16 @@ module Base
 		texture = WorldItems/DeadLeaves,
 		scale = 0.4,
 	}
+
+	model GrassSeedBag_Ground
+    {
+        mesh = WorldItems/SeedPacket,
+        texture = WorldItems/SeedPacket_Grass,
+        scale = 0.4,
+        attachment Bip01_Prop2
+        {
+            offset = 0.017 0.0481 -0.0115,
+            rotate = 13.8562 -18.4542 38.9757,
+        }
+    }
 }
