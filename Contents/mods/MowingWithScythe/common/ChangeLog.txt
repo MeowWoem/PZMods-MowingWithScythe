@@ -105,3 +105,8 @@ Now you can find grass seeds packets in farming/gardening storages/shops !
 Added:
 - New item: "Seed Packet - Grass" and related recipes and distributions
 [ ------ ]
+
+[ v1.6.1 - 08.29.2026 ]
+Changed:
+- Cleaning scripts and remove unused files
+[ ------ ]
