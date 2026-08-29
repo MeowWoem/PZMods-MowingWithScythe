@@ -1,0 +1,35 @@
+module Base {
+    craftRecipe OpenGrassSeedPacket
+    {
+        timedAction = PutSeedsInPacket,
+        time = 20,
+        Tags = InHandCraft;Farming;CanBeDoneInDark,
+        category = Farming,
+        inputs
+        {
+            item 1 [Base.GrassSeedsBag],
+        }
+        outputs
+        {
+            item 25 Base.GrassSeeds,
+            item 1 Base.GrassSeedsBag_Empty,
+        }
+    }
+
+    craftRecipe PutGrassSeedsInPacket
+    {
+        timedAction = PutSeedsInPacket,
+        time = 10,
+        Tags = InHandCraft;Farming,
+        category = Farming,
+        inputs
+        {
+            item 25 [Base.GrassSeeds] flags[IsExclusive;ItemCount] mode:destroy,
+            item 1 [Base.GrassSeedsBag_Empty] flags[Prop2],
+        }
+        outputs
+        {
+            item 1 Base.GrassSeedsBag,
+        }
+    }
+}
