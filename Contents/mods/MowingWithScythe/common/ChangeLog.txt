@@ -88,3 +88,20 @@ Changed:
 - Sowing grass seeds now randomly selects from 4 different grass sprite variations for a more natural look.
 - Sowing grass seeds no longer causes back pain.
 [ ------ ]
+
+[ v1.5.2 - 08/27/2026 ]
+Fixed:
+- Fixed a bug where the "Sow grass seeds" option would not appear if you had a scythe or rake in your inventory (thanks to Ranna).
+[ ------ ]
+
+[ v1.5.3 - 08/29/2026 ]
+Fixed:
+- Hotfix with the contextual menu.
+[ ------ ]
+
+[ v1.6.0 - 08/29/2026 ]
+Now you can find grass seeds packets in farming/gardening storages/shops !
+
+Added:
+- New item: "Seed Packet - Grass" and related recipes and distributions
+[ ------ ]
