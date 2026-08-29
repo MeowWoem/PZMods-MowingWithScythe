@@ -82,9 +82,11 @@ function ContextMenu.addMowContextOption(player, context, worldObjects, test)
         end
     end
 
-    gardeningMenuShouldAdded = gardeningMenuShouldAdded or ContextMenu.addScytheContextOption(playerObj, playerInv, gardeningSubMenu, player, context, worldObjects, test);
-    gardeningMenuShouldAdded = gardeningMenuShouldAdded or ContextMenu.addRakeContextOption(playerObj, playerInv, gardeningSubMenu, player, context, worldObjects, test);
-    gardeningMenuShouldAdded = gardeningMenuShouldAdded or ContextMenu.addPlantGrassSeedContextOption(playerObj, playerInv, gardeningSubMenu, player, context, worldObjects, test);
+    local scytheAdded = ContextMenu.addScytheContextOption(playerObj, playerInv, gardeningSubMenu, player, context, worldObjects, test);
+    local rakeAdded = ContextMenu.addRakeContextOption(playerObj, playerInv, gardeningSubMenu, player, context, worldObjects, test);
+    local seedAdded = ContextMenu.addPlantGrassSeedContextOption(playerObj, playerInv, gardeningSubMenu, player, context, worldObjects, test);
+    
+    gardeningMenuShouldAdded = scytheAdded or rakeAdded or seedAdded;
 
 
     if(not gardeningMenuExist and gardeningMenuShouldAdded) then
