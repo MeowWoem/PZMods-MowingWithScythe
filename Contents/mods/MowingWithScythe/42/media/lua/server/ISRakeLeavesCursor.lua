@@ -19,16 +19,16 @@ function ISRakeLeavesCursor:create(x, y, z, north, sprite)
 end
 
 function ISRakeLeavesCursor:walkTo(x, y, z)
-	local playerObj = self.character
-	local squares = self:getSquares(x, y, z)
-    local closestSq = self:getClosestSquare(squares)
+	local playerObj = self.character;
+	local squares = self:getSquares(x, y, z);
+    local closestSq = self:getClosestSquare(squares);
     if playerObj:getCurrentSquare() == closestSq then
-        return true
+        return true;
     end
-    local adjacent = AdjacentFreeTileFinder.Find(closestSq, self.character)
-    if not adjacent then return false end
-    ISTimedActionQueue.add(ISWalkToTimedAction:new(playerObj, adjacent))
-	return true
+    local adjacent = AdjacentFreeTileFinder.Find(closestSq, self.character);
+    if not adjacent then return false; end
+    ISTimedActionQueue.add(ISWalkToTimedAction:new(playerObj, adjacent));
+	return true;
 end
 
 
@@ -97,10 +97,10 @@ end
 
 function ISRakeLeavesCursor:onJoypadPressButton(joypadIndex, joypadData, button)
 	if button == Joypad.AButton or button == Joypad.BButton then
-		return ISBuildingObject.onJoypadPressButton(self, joypadIndex, joypadData, button)
+		return ISBuildingObject.onJoypadPressButton(self, joypadIndex, joypadData, button);
 	end
     if button == Joypad.YButton then
-        return self:rotateKey(getCore():getKey("Rotate building"))
+        return self:rotateKey(getCore():getKey("Rotate building"));
     end
 end
 

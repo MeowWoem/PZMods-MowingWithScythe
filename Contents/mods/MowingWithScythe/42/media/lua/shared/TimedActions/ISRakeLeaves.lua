@@ -2,7 +2,7 @@
 --**                       AMENOPHIS                       **
 --***********************************************************
 
-require "TimedActions/ISBaseTimedAction"
+require "TimedActions/ISBaseTimedAction";
 
 
 ISRakeLeaves = ISBaseTimedAction:derive("ISRakeLeaves");
@@ -41,7 +41,7 @@ function ISRakeLeaves:perform()
 end
 
 function ISRakeLeaves:complete()
-    local i = 0
+    local i = 0;
 
     for x=self.sq:getX(), self.sq:getX()+self.radius-1 do
         for y=self.sq:getY(), self.sq:getY()+self.radius-1 do
@@ -66,7 +66,7 @@ function ISRakeLeaves:complete()
 
     local use = self.item:getWeight() * self.character:getFatigueMod() * 0.1;
     local useChargeDelta = 1.0;
-    use = use * useChargeDelta * 0.041
+    use = use * useChargeDelta * 0.041;
     if self.item:isTwoHandWeapon() and self.character:getSecondaryHandItem() ~= self.item then
         use = use + self.item:getWeight() / 1.5 / 10 / 20;
     end
@@ -76,7 +76,7 @@ function ISRakeLeaves:complete()
         addXp(self.character, Perks.Farming, (i/2) * SandboxVars.MowingWithScythe.XPMultiplierRakingLeaves);
     end
 
-    return true
+    return true;
 end
 
 function ISRakeLeaves.isLeaves(object)
@@ -134,7 +134,7 @@ function ISRakeLeaves:stopSound()
 end
 
 function ISRakeLeaves:new (character, item, sq, radius)
-    local o = ISBaseTimedAction.new(self, character)
+    local o = ISBaseTimedAction.new(self, character);
     
     o.item = item;
     if item and not radius then

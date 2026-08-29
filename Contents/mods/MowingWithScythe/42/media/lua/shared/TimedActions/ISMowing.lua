@@ -2,7 +2,7 @@
 --**                       AMENOPHIS                       **
 --***********************************************************
 
-require "TimedActions/ISBaseTimedAction"
+require "TimedActions/ISBaseTimedAction";
 
 ISMowing = ISBaseTimedAction:derive("ISMowing");
 
@@ -53,28 +53,28 @@ function ISMowing:start()
     self.item:setJobType(getText("ContextMenu_MowGrass"));
  	self.item:setJobDelta(0.0);
 
-    self:setActionAnim("scything")
-    self:setOverrideHandModels(self.item, nil)
+    self:setActionAnim("scything");
+    self:setOverrideHandModels(self.item, nil);
 
-    self.sound = self.character:playSound("ScytheGrass")
+    self.sound = self.character:playSound("ScytheGrass");
 end
 
 function ISMowing:stop()
-    self:stopSound()
+    self:stopSound();
     self.item:setJobDelta(0.0);
 
     ISBaseTimedAction.stop(self);
 end
 
 function ISMowing:perform()
-    self:stopSound()
+    self:stopSound();
     self.item:setJobDelta(0.0);
 
     ISBaseTimedAction.perform(self);
 end
 
 function ISMowing:complete()
-    local i = 0
+    local i = 0;
 
     for x=self.sq:getX(), self.sq:getX()+self.radius-1 do
         for y=self.sq:getY(), self.sq:getY()+self.radius-1 do
@@ -101,7 +101,7 @@ function ISMowing:complete()
 
     local use = self.item:getWeight() * self.character:getFatigueMod() * 0.1;
     local useChargeDelta = 1.0;
-    use = use * useChargeDelta * 0.041
+    use = use * useChargeDelta * 0.041;
     if self.item:isTwoHandWeapon() and self.character:getSecondaryHandItem() ~= self.item then
         use = use + self.item:getWeight() / 1.5 / 10 / 20;
     end
@@ -111,7 +111,7 @@ function ISMowing:complete()
         addXp(self.character, Perks.Farming, i * SandboxVars.MowingWithScythe.XPMultiplierMowing);
     end
 
-    return true
+    return true;
 end
 
 function ISMowing.isCuttable(object)
@@ -160,7 +160,7 @@ end
 
 function ISMowing:getDuration()
     if self.character:isTimedActionInstant() then
-        return 1
+        return 1;
     end
 	local duration = 0;
     local skill = self.character:getPerkLevel(Perks.Farming);
@@ -169,7 +169,7 @@ function ISMowing:getDuration()
             local sq = getSquare(x, y, self.sq:getZ());
             if sq then
                 for i=sq:getObjects():size(),1,-1 do
-					local o = sq:getObjects():get(i-1)
+					local o = sq:getObjects():get(i-1);
 					if self.isCuttable(o) then
 						duration = duration + 20 - skill;
 					end
@@ -177,7 +177,7 @@ function ISMowing:getDuration()
             end
         end
     end
-    return duration
+    return duration;
 end
 
 function ISMowing:stopSound()
@@ -187,19 +187,19 @@ function ISMowing:stopSound()
 end
 
 function ISMowing:new (character, item, sq, radius)
-    local o = ISBaseTimedAction.new(self, character)
+    local o = ISBaseTimedAction.new(self, character);
     
     o.item = item;
     if item and not radius then
-        radius = 3
+        radius = 3;
         if item:getType() == "HandScythe" or item:hasTag(ItemTag.HAND_SCYTHE) then
-           radius = 1
+           radius = 1;
         end
     end
     o.radius = radius;
     o.sq = sq or character:getCurrentSquare();
 	o.maxTime = o:getDuration();
-    return o
+    return o;
 end
 
 

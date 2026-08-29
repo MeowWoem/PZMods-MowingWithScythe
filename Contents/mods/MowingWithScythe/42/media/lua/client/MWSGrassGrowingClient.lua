@@ -2,7 +2,7 @@
 --**                       AMENOPHIS                       **
 --***********************************************************
 
-require "MWSGrassGrowingShared"
+require "MWSGrassGrowingShared";
 
 MWSGrassGrowingClient = MWSGrassGrowingClient or {};
 

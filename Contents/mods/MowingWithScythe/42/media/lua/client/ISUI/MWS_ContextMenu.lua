@@ -2,7 +2,7 @@
 --**                       AMENOPHIS                       **
 --***********************************************************
 
-local ContextMenu = {}
+local ContextMenu = {};
 
 
 local function predicateScythe(item)
@@ -33,7 +33,7 @@ function ContextMenu.addMowContextOption(player, context, worldObjects, test)
 	
 	local playerObj = getSpecificPlayer(player);
     local playerInv = playerObj:getInventory();
-    if playerObj:isAsleep() then return; end;
+    if playerObj:isAsleep() then return; end
     
     local gardeningText = getText("ContextMenu_Gardening");
     local gardeningOption = nil;
@@ -42,7 +42,7 @@ function ContextMenu.addMowContextOption(player, context, worldObjects, test)
     for _, opt in ipairs(context.options) do
         if opt.name == gardeningText then
             gardeningOption = opt;
-            break;
+            break
         end
     end
 
@@ -64,7 +64,7 @@ function ContextMenu.addMowContextOption(player, context, worldObjects, test)
     for _, opt in ipairs(gardeningSubMenu.options) do
         if(opt.name == removeBushText) then
             removeBushExists = true;
-            break;
+            break
         end
     end
 

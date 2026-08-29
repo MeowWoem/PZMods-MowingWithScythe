@@ -5,7 +5,7 @@ function ISRemovePlantCursor:getRemovableObject(square)
     local o = old_ISRemovePlantCursor_getRemovableObject(self, square);
     if(not o) then 
         for i=1,square:getObjects():size() do
-            local o = square:getObjects():get(i-1)
+            local o = square:getObjects():get(i-1);
             if self.removeType == "bush" then
                 local props = o:getProperties();
                 local customName = "";

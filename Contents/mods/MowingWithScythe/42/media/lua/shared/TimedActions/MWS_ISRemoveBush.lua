@@ -6,7 +6,7 @@ function ISRemoveBush:getBushObject(square)
     local o = old_ISRemoveBush_getBushObject(self, square);
 	if(not o) then 
         for i=1,square:getObjects():size() do
-            local o = square:getObjects():get(i-1)
+            local o = square:getObjects():get(i-1);
             local props = o:getProperties();
             local customName = "";
             if(props and props:get("CustomName")) then
@@ -26,18 +26,18 @@ function ISRemoveBush:complete()
 
     old_ISRemoveBush_complete(self);
 
-    local sq = self.square
+    local sq = self.square;
 
 	if sq and not self.wallVine then
         for i=0,sq:getObjects():size()-1 do
-            local o = sq:getObjects():get(i)
+            local o = sq:getObjects():get(i);
             local props = o:getProperties();
             local customName = "";
             if(props and props:get("CustomName")) then
                 customName = props:get("CustomName");
             end
             if(o:getSprite() and o:getSprite():getName() and o:getSprite():getName():find("bushes") or customName == "Bush") then
-                sq:transmitRemoveItemFromSquare(o)
+                sq:transmitRemoveItemFromSquare(o);
                 if ZombRand(2) == 0 then
                     sq:AddWorldInventoryItem("Base.TreeBranch2", 0, 0, 0);
                 end

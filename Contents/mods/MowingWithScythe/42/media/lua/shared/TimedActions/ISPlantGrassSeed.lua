@@ -2,8 +2,8 @@
 --**                       AMENOPHIS                       **
 --***********************************************************
 
-require "TimedActions/ISBaseTimedAction"
-require "MWSGrassGrowingShared"
+require "TimedActions/ISBaseTimedAction";
+require "MWSGrassGrowingShared";
 
 ISPlantGrassSeed = ISBaseTimedAction:derive("ISPlantGrassSeed");
 
@@ -21,8 +21,8 @@ end
 function ISPlantGrassSeed:start()
     self.item:setJobType(getText("ContextMenu_PlantGrassSeeds"));
     self.item:setJobDelta(0.0);
-    self:setActionAnim("Loot")
-    self:setOverrideHandModels(self.item, nil)
+    self:setActionAnim("Loot");
+    self:setOverrideHandModels(self.item, nil);
 end
 
 function ISPlantGrassSeed:stop()
@@ -55,22 +55,22 @@ function ISPlantGrassSeed:complete()
         addXp(self.character, Perks.Farming, 2 * SandboxVars.MowingWithScythe.XPMultiplierSowingGrass);
     end
 
-    return true
+    return true;
 end
 
 function ISPlantGrassSeed:getDuration()
     if self.character:isTimedActionInstant() then
-        return 1
+        return 1;
     end
     local skill = self.character:getPerkLevel(Perks.Farming);
     return math.max(50, 200 - skill * 10);
 end
 
 function ISPlantGrassSeed:new(character, item, sq)
-    local o = ISBaseTimedAction.new(self, character)
+    local o = ISBaseTimedAction.new(self, character);
 
     o.item = item;
     o.sq = sq or character:getCurrentSquare();
     o.maxTime = o:getDuration();
-    return o
+    return o;
 end
