@@ -122,7 +122,12 @@ function ISMowing.isCuttable(object)
         customName = props:get("CustomName");
     end
 
-    return (object:isGrassLike() or ISMowing.driedSpriteList[object:getSprite():getName()]) and (
+    local isDriedSprite = false;
+    if(object:getSprite() and object:getSprite():getName()) then
+        isDriedSprite = ISMowing.driedSpriteList[object:getSprite():getName()] or false;
+    end
+
+    return (object:isGrassLike() or isDriedSprite) and (
         props and (
             not customName:find("Branch") and
             not customName:find("Leaves") and
