@@ -110,3 +110,15 @@ Added:
 Changed:
 - Cleaning scripts and remove unused files
 [ ------ ]
+
+
+[ v1.7.0 - 09.05.2026 ]
+Added:
+- You can now remove tree stumps with a shovel
+
+Changed:
+- Reduction in the time needed to sow grass seeds
+
+Fixed:
+- Fixed the error in ISMowing.lua:125
+[ ------ ]
