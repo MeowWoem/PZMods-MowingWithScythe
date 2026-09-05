@@ -32,4 +32,21 @@ module Base {
             item 1 Base.GrassSeedsBag,
         }
     }
+
+    craftRecipe InspectGrassTuft
+    {
+        timedAction = Making,
+        time = 30,
+        Tags = InHandCraft;Farming,
+        category = Farming,
+		OnCreate = MWSGrassGrowing.Recipes.OnCreate.InspectGrassTufts,
+        inputs
+        {
+            item 2 [Base.GrassTuft] flags[ItemCount] mode:destroy,
+        }
+        outputs
+        {
+            item 1 Base.GrassTuft,
+        }
+    }
 }
