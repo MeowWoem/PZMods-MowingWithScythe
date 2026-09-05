@@ -63,7 +63,7 @@ function ISPlantGrassSeed:getDuration()
         return 1;
     end
     local skill = self.character:getPerkLevel(Perks.Farming);
-    return math.max(50, 200 - skill * 10);
+    return math.max(10, 110 - skill * 10);
 end
 
 function ISPlantGrassSeed:new(character, item, sq)
