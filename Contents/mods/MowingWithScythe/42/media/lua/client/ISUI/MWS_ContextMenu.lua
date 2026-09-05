@@ -9,6 +9,12 @@ local function predicateScythe(item)
 	if not item then return false; end
 	return not item:isBroken() and item:hasTag(ItemTag.SCYTHE);
 end
+
+local function predicateShovel(item)
+	if not item then return false; end
+	return not item:isBroken() and item:hasTag(ItemTag.DIG_GRAVE);
+end
+
 local function predicateRake(item)
 	if not item then return false; end
 	return not item:isBroken() and (item:getFullType() == "Base.Rake" or item:getFullType() == "Base.LeafRake");
@@ -27,6 +33,27 @@ end
 function ContextMenu.onPlantGrassSeeds(player, seedItem)
 	local bo = ISPlantGrassSeedCursor:new(player, seedItem);
 	getCell():setDrag(bo, bo.player);
+end
+
+function ContextMenu.onRemoveStump(player, shovel)
+	local bo = ISRemoveStumpCursor:new(player, shovel);
+	getCell():setDrag(bo, bo.player);
+end
+
+local function _isStump(worldObjects)
+    for _, obj in ipairs(worldObjects) do
+        local props = obj:getProperties();
+        local customName = "";
+        if(props and props:get("CustomName")) then
+            customName = props:get("CustomName");
+        end
+        
+        if(obj:getSprite() and obj:getSprite():getName() and obj:getSprite():getName():find("stumps") or customName == "Stump") then
+            return true;
+        end
+
+    end
+    return false;
 end
 
 function ContextMenu.addMowContextOption(player, context, worldObjects, test)
@@ -67,6 +94,9 @@ function ContextMenu.addMowContextOption(player, context, worldObjects, test)
             break
         end
     end
+    
+    local bushAdded = false;
+    local stumpAdded = false;
 
     if(not removeBushExists) then
         for _, obj in ipairs(worldObjects) do
@@ -78,15 +108,20 @@ function ContextMenu.addMowContextOption(player, context, worldObjects, test)
             
             if(obj:getSprite() and obj:getSprite():getName() and obj:getSprite():getName():find("bushes") or customName == "Bush") then
                 gardeningSubMenu:addOption(removeBushText, worldObjects, ISWorldObjectContextMenu.onRemovePlant, false, false, player);
+                bushAdded = true;
             end
         end
+    end
+
+    if(_isStump(worldObjects)) then
+        stumpAdded = ContextMenu.addRemoveStumpContextOption(playerObj, playerInv, gardeningSubMenu, player, context, worldObjects, test);
     end
 
     local scytheAdded = ContextMenu.addScytheContextOption(playerObj, playerInv, gardeningSubMenu, player, context, worldObjects, test);
     local rakeAdded = ContextMenu.addRakeContextOption(playerObj, playerInv, gardeningSubMenu, player, context, worldObjects, test);
     local seedAdded = ContextMenu.addPlantGrassSeedContextOption(playerObj, playerInv, gardeningSubMenu, player, context, worldObjects, test);
     
-    gardeningMenuShouldAdded = scytheAdded or rakeAdded or seedAdded;
+    gardeningMenuShouldAdded = scytheAdded or rakeAdded or seedAdded or bushAdded or stumpAdded;
 
 
     if(not gardeningMenuExist and gardeningMenuShouldAdded) then
@@ -153,6 +188,21 @@ function ContextMenu.addPlantGrassSeedContextOption(playerObj, playerInv, garden
             opt.notAvailable = true;
         end
 
+        return true;
+    end
+    return false;
+end
+
+function ContextMenu.addRemoveStumpContextOption(playerObj, playerInv, gardeningSubMenu, player, context, worldObjects, test)
+
+    local shovel = playerInv:getFirstEvalRecurse(predicateShovel);
+
+    if shovel and not playerObj:getVehicle() then
+
+        if test == true then return false; end
+
+        local opt = gardeningSubMenu:addOption(getText("ContextMenu_Remove_Stump"), playerObj, ContextMenu.onRemoveStump, shovel);
+        opt.iconTexture = shovel:getTexture();
         return true;
     end
     return false;
